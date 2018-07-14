@@ -1,0 +1,272 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+services:
+  orderer.vnu.edu.vn:
+    container_name: orderer.vnu.edu.vn
+    image: hyperledger/fabric-orderer:$IMAGE_TAG
+    environment:
+      - ORDERER_GENERAL_LOGLEVEL=INFO
+      - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
+      - ORDERER_GENERAL_GENESISMETHOD=file
+      - ORDERER_GENERAL_GENESISFILE=/var/hyperledger/orderer/orderer.genesis.block
+      - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
+      - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
+      # enabled TLS
+      - ORDERER_GENERAL_TLS_ENABLED=true
+      - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
+      - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
+      - ORDERER_GENERAL_TLS_ROOTCAS=[/var/hyperledger/orderer/tls/ca.crt]
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric
+    command: orderer
+    volumes:
+      - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ../crypto-config/ordererOrganizations/vnu.edu.vn/orderers/orderer.vnu.edu.vn/msp:/var/hyperledger/orderer/msp
+      - ../crypto-config/ordererOrganizations/vnu.edu.vn/orderers/orderer.vnu.edu.vn/tls/:/var/hyperledger/orderer/tls
+      - orderer.vnu.edu.vn:/var/hyperledger/production/orderer
+    ports:
+      - 7050:7050
+
+  peer0.uet.vnu.edu.vn:
+    container_name: peer0.uet.vnu.edu.vn
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.uet.vnu.edu.vn
+      - CORE_PEER_ADDRESS=peer0.uet.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.uet.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.uet.vnu.edu.vn:7051
+      - CORE_PEER_LOCALMSPID=UetMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/uet.vnu.edu.vn/peers/peer0.uet.vnu.edu.vn/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/uet.vnu.edu.vn/peers/peer0.uet.vnu.edu.vn/tls:/etc/hyperledger/fabric/tls
+        - peer0.uet.vnu.edu.vn:/var/hyperledger/production
+    ports:
+      - 7051:7051
+      - 7053:7053
+
+  peer1.uet.vnu.edu.vn:
+    container_name: peer1.uet.vnu.edu.vn
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.uet.vnu.edu.vn
+      - CORE_PEER_ADDRESS=peer1.uet.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.uet.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.uet.vnu.edu.vn:7051
+      - CORE_PEER_LOCALMSPID=UetMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/uet.vnu.edu.vn/peers/peer1.uet.vnu.edu.vn/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/uet.vnu.edu.vn/peers/peer1.uet.vnu.edu.vn/tls:/etc/hyperledger/fabric/tls
+        - peer1.uet.vnu.edu.vn:/var/hyperledger/production
+    ports:
+      - 8051:7051
+      - 8053:7053
+
+  peer2.uet.vnu.edu.vn:
+    container_name: peer2.uet.vnu.edu.vn
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer2.uet.vnu.edu.vn
+      - CORE_PEER_ADDRESS=peer2.uet.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.uet.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.uet.vnu.edu.vn:7051
+      - CORE_PEER_LOCALMSPID=UetMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/uet.vnu.edu.vn/peers/peer2.uet.vnu.edu.vn/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/uet.vnu.edu.vn/peers/peer2.uet.vnu.edu.vn/tls:/etc/hyperledger/fabric/tls
+        - peer2.uet.vnu.edu.vn:/var/hyperledger/production
+    ports:
+      - 8151:7051
+      - 8153:7053
+
+  peer3.uet.vnu.edu.vn:
+    container_name: peer3.uet.vnu.edu.vn
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer3.uet.vnu.edu.vn
+      - CORE_PEER_ADDRESS=peer3.uet.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer3.uet.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.uet.vnu.edu.vn:7051
+      - CORE_PEER_LOCALMSPID=UetMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/uet.vnu.edu.vn/peers/peer3.uet.vnu.edu.vn/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/uet.vnu.edu.vn/peers/peer3.uet.vnu.edu.vn/tls:/etc/hyperledger/fabric/tls
+        - peer3.uet.vnu.edu.vn:/var/hyperledger/production
+    ports:
+      - 8251:7051
+      - 8253:7053
+
+  peer0.ulis.vnu.edu.vn:
+    container_name: peer0.ulis.vnu.edu.vn
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.ulis.vnu.edu.vn
+      - CORE_PEER_ADDRESS=peer0.ulis.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.ulis.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.ulis.vnu.edu.vn:7051
+      - CORE_PEER_LOCALMSPID=UlisMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/ulis.vnu.edu.vn/peers/peer0.ulis.vnu.edu.vn/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/ulis.vnu.edu.vn/peers/peer0.ulis.vnu.edu.vn/tls:/etc/hyperledger/fabric/tls
+        - peer0.ulis.vnu.edu.vn:/var/hyperledger/production
+    ports:
+      - 9051:7051
+      - 9053:7053
+
+  peer1.ulis.vnu.edu.vn:
+    container_name: peer1.ulis.vnu.edu.vn
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.ulis.vnu.edu.vn
+      - CORE_PEER_ADDRESS=peer1.ulis.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.ulis.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.ulis.vnu.edu.vn:7051
+      - CORE_PEER_LOCALMSPID=UlisMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/ulis.vnu.edu.vn/peers/peer1.ulis.vnu.edu.vn/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/ulis.vnu.edu.vn/peers/peer1.ulis.vnu.edu.vn/tls:/etc/hyperledger/fabric/tls
+        - peer1.ulis.vnu.edu.vn:/var/hyperledger/production
+    ports:
+      - 10051:7051
+      - 10053:7053
+
+  peer2.ulis.vnu.edu.vn:
+    container_name: peer2.ulis.vnu.edu.vn
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer2.ulis.vnu.edu.vn
+      - CORE_PEER_ADDRESS=peer2.ulis.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.ulis.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.ulis.vnu.edu.vn:7051
+      - CORE_PEER_LOCALMSPID=UlisMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/ulis.vnu.edu.vn/peers/peer2.ulis.vnu.edu.vn/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/ulis.vnu.edu.vn/peers/peer2.ulis.vnu.edu.vn/tls:/etc/hyperledger/fabric/tls
+        - peer2.ulis.vnu.edu.vn:/var/hyperledger/production
+    ports:
+      - 10151:7051
+      - 10153:7053
+
+  peer3.ulis.vnu.edu.vn:
+    container_name: peer3.ulis.vnu.edu.vn
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer3.ulis.vnu.edu.vn
+      - CORE_PEER_ADDRESS=peer3.ulis.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer3.ulis.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.ulis.vnu.edu.vn:7051
+      - CORE_PEER_LOCALMSPID=UlisMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/ulis.vnu.edu.vn/peers/peer3.ulis.vnu.edu.vn/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/ulis.vnu.edu.vn/peers/peer3.ulis.vnu.edu.vn/tls:/etc/hyperledger/fabric/tls
+        - peer3.ulis.vnu.edu.vn:/var/hyperledger/production
+    ports:
+      - 10251:7051
+      - 10253:7053
+
+  peer0.ussh.vnu.edu.vn:
+    container_name: peer0.ussh.vnu.edu.vn
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.ussh.vnu.edu.vn
+      - CORE_PEER_ADDRESS=peer0.ussh.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.ussh.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.ussh.vnu.edu.vn:7051
+      - CORE_PEER_LOCALMSPID=UsshMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/ussh.vnu.edu.vn/peers/peer0.ussh.vnu.edu.vn/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/ussh.vnu.edu.vn/peers/peer0.ussh.vnu.edu.vn/tls:/etc/hyperledger/fabric/tls
+        - peer0.ussh.vnu.edu.vn:/var/hyperledger/production
+    ports:
+      - 11051:7051
+      - 11053:7053
+
+  peer1.ussh.vnu.edu.vn:
+    container_name: peer1.ussh.vnu.edu.vn
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.ussh.vnu.edu.vn
+      - CORE_PEER_ADDRESS=peer1.ussh.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.ussh.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.ussh.vnu.edu.vn:7051
+      - CORE_PEER_LOCALMSPID=UsshMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/ussh.vnu.edu.vn/peers/peer1.ussh.vnu.edu.vn/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/ussh.vnu.edu.vn/peers/peer1.ussh.vnu.edu.vn/tls:/etc/hyperledger/fabric/tls
+        - peer1.ussh.vnu.edu.vn:/var/hyperledger/production
+    ports:
+      - 12051:7051
+      - 17053:7053
+
+  peer2.ussh.vnu.edu.vn:
+    container_name: peer2.ussh.vnu.edu.vn
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer2.ussh.vnu.edu.vn
+      - CORE_PEER_ADDRESS=peer2.ussh.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer2.ussh.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.ussh.vnu.edu.vn:7051
+      - CORE_PEER_LOCALMSPID=UsshMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/ussh.vnu.edu.vn/peers/peer2.ussh.vnu.edu.vn/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/ussh.vnu.edu.vn/peers/peer2.ussh.vnu.edu.vn/tls:/etc/hyperledger/fabric/tls
+        - peer2.ussh.vnu.edu.vn:/var/hyperledger/production
+    ports:
+      - 12151:7051
+      - 12153:7053
+
+  peer3.ussh.vnu.edu.vn:
+    container_name: peer3.ussh.vnu.edu.vn
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer3.ussh.vnu.edu.vn
+      - CORE_PEER_ADDRESS=peer3.ussh.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer3.ussh.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.ussh.vnu.edu.vn:7051
+      - CORE_PEER_LOCALMSPID=UsshMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ../crypto-config/peerOrganizations/ussh.vnu.edu.vn/peers/peer3.ussh.vnu.edu.vn/msp:/etc/hyperledger/fabric/msp
+        - ../crypto-config/peerOrganizations/ussh.vnu.edu.vn/peers/peer3.ussh.vnu.edu.vn/tls:/etc/hyperledger/fabric/tls
+        - peer3.ussh.vnu.edu.vn:/var/hyperledger/production
+    ports:
+      - 12251:7051
+      - 12253:7053

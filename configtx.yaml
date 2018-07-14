@@ -1,0 +1,74 @@
+Organizations:
+    - &OrdererOrg
+        Name: OrdererOrg
+        ID: OrdererMSP
+        MSPDir: crypto-config/ordererOrganizations/vnu.edu.vn/msp
+    - &UET
+        Name: UetMSP
+        ID: UetMSP
+        MSPDir: crypto-config/peerOrganizations/uet.vnu.edu.vn/msp
+        AnchorPeers:
+            - Host: peer0.uet.vnu.edu.vn
+              Port: 7051
+    - &USSH
+        Name: UsshMSP
+        ID: UsshMSP
+        MSPDir: crypto-config/peerOrganizations/ussh.vnu.edu.vn/msp
+        AnchorPeers:
+            - Host: peer0.ussh.vnu.edu.vn
+              Port: 7051
+    - &ULIS
+        Name: UlisMSP
+        ID: UlisMSP
+        MSPDir: crypto-config/peerOrganizations/ulis.vnu.edu.vn/msp
+        AnchorPeers:
+            - Host: peer0.ulis.vnu.edu.vn
+              Port: 7051
+Capabilities:
+    Global: &ChannelCapabilities
+        V1_1: true
+    Orderer: &OrdererCapabilities
+        V1_1: true
+    Application: &ApplicationCapabilities
+        V1_2: true
+Application: &ApplicationDefaults
+    Organizations:
+Orderer: &OrdererDefaults
+    OrdererType: solo
+    Addresses:
+        - orderer.vnu.edu.vn:7050
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+    Kafka:
+        Brokers:
+            - 127.0.0.1:9092
+    Organizations:
+Profiles:
+    OrdererGenesis:
+        Capabilities:
+            <<: *ChannelCapabilities
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                    - *UET
+                    - *USSH
+                    - *ULIS
+    OrgsChannel:
+        Consortium: SampleConsortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *UET
+                - *USSH
+                - *ULIS
+            Capabilities:
+                <<: *ApplicationCapabilities

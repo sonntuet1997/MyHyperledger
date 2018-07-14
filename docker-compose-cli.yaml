@@ -1,0 +1,172 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+volumes:
+  orderer.vnu.edu.vn:
+  peer0.uet.vnu.edu.vn:
+  peer1.uet.vnu.edu.vn:
+  peer2.uet.vnu.edu.vn:
+  peer3.uet.vnu.edu.vn:
+  peer0.ulis.vnu.edu.vn:
+  peer1.ulis.vnu.edu.vn:
+  peer2.ulis.vnu.edu.vn:
+  peer3.ulis.vnu.edu.vn:
+  peer0.ussh.vnu.edu.vn:
+  peer1.ussh.vnu.edu.vn:
+  peer2.ussh.vnu.edu.vn:
+  peer3.ussh.vnu.edu.vn:
+networks:
+  byfn:
+
+services:
+
+  orderer.vnu.edu.vn:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer.vnu.edu.vn
+    container_name: orderer.vnu.edu.vn
+    networks:
+      - byfn
+
+  peer0.uet.vnu.edu.vn:
+    container_name: peer0.uet.vnu.edu.vn
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.uet.vnu.edu.vn
+    networks:
+      - byfn
+
+  peer1.uet.vnu.edu.vn:
+    container_name: peer1.uet.vnu.edu.vn
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.uet.vnu.edu.vn
+    networks:
+      - byfn
+
+  peer2.uet.vnu.edu.vn:
+    container_name: peer2.uet.vnu.edu.vn
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer2.uet.vnu.edu.vn
+    networks:
+      - byfn
+
+  peer3.uet.vnu.edu.vn:
+    container_name: peer3.uet.vnu.edu.vn
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer3.uet.vnu.edu.vn
+    networks:
+      - byfn
+
+  peer0.ulis.vnu.edu.vn:
+    container_name: peer0.ulis.vnu.edu.vn
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.ulis.vnu.edu.vn
+    networks:
+      - byfn
+
+  peer1.ulis.vnu.edu.vn:
+    container_name: peer1.ulis.vnu.edu.vn
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.ulis.vnu.edu.vn
+    networks:
+      - byfn
+
+  peer2.ulis.vnu.edu.vn:
+    container_name: peer2.ulis.vnu.edu.vn
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer2.ulis.vnu.edu.vn
+    networks:
+      - byfn
+
+  peer3.ulis.vnu.edu.vn:
+    container_name: peer3.ulis.vnu.edu.vn
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer3.ulis.vnu.edu.vn
+    networks:
+      - byfn
+
+  peer0.ussh.vnu.edu.vn:
+    container_name: peer0.ussh.vnu.edu.vn
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.ussh.vnu.edu.vn
+    networks:
+      - byfn
+
+  peer1.ussh.vnu.edu.vn:
+    container_name: peer1.ussh.vnu.edu.vn
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.ussh.vnu.edu.vn
+    networks:
+      - byfn
+
+  peer2.ussh.vnu.edu.vn:
+    container_name: peer2.ussh.vnu.edu.vn
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer2.ussh.vnu.edu.vn
+    networks:
+      - byfn
+
+  peer3.ussh.vnu.edu.vn:
+    container_name: peer3.ussh.vnu.edu.vn
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer3.ussh.vnu.edu.vn
+    networks:
+      - byfn
+
+  cli:
+    container_name: cli
+    image: hyperledger/fabric-tools:$IMAGE_TAG
+    tty: true
+    stdin_open: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      #- CORE_LOGGING_LEVEL=DEBUG
+      - CORE_LOGGING_LEVEL=INFO
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.uet.vnu.edu.vn:7051
+      - CORE_PEER_LOCALMSPID=UetMSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/uet.vnu.edu.vn/peers/peer0.uet.vnu.edu.vn/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/uet.vnu.edu.vn/peers/peer0.uet.vnu.edu.vn/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/uet.vnu.edu.vn/peers/peer0.uet.vnu.edu.vn/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/uet.vnu.edu.vn/users/Admin@uet.vnu.edu.vn/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./chaincode/:/opt/gopath/src/github.com/chaincode
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - orderer.vnu.edu.vn
+      - peer0.uet.vnu.edu.vn
+      - peer1.uet.vnu.edu.vn
+      - peer2.uet.vnu.edu.vn
+      - peer3.uet.vnu.edu.vn
+      - peer0.ulis.vnu.edu.vn
+      - peer1.ulis.vnu.edu.vn
+      - peer2.ulis.vnu.edu.vn
+      - peer3.ulis.vnu.edu.vn
+      - peer0.ussh.vnu.edu.vn
+      - peer1.ussh.vnu.edu.vn
+      - peer2.ussh.vnu.edu.vn
+      - peer3.ussh.vnu.edu.vn
+    networks:
+      - byfn

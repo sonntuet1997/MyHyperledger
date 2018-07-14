@@ -1,0 +1,29 @@
+OrdererOrgs:
+  - Name: Orderer
+    Domain: vnu.edu.vn
+    Specs:
+      - Hostname: orderer
+PeerOrgs:
+  - Name: ULIS
+    Domain: ulis.vnu.edu.vn
+    EnableNodeOUs: true
+  # Specs:
+  #   - Hostname: ulis
+    Template:
+      Count: 4
+    Users:
+      Count: 4
+  - Name: UET
+    Domain: uet.vnu.edu.vn
+    EnableNodeOUs: true
+    Template:
+      Count: 4
+    Users:
+      Count: 4
+  - Name: USSH
+    Domain: ussh.vnu.edu.vn
+    EnableNodeOUs: true
+    Template:
+      Count: 4
+    Users:
+      Count: 4
