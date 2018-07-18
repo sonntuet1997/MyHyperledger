@@ -123,7 +123,7 @@ function joinChannel(org, ORGS, constants) {
         genesis_block = block;
         for (let key in ORGS[org]) {
             if (ORGS[org].hasOwnProperty(key)) {
-                if (key.indexOf('peer') === 0) {
+                if (key.indexOf('peer1') === 0) {
                     data = fs.readFileSync(path.join(__dirname, ORGS[org][key]['tls_cacerts']));
                     targets.push(
                         client.newPeer(

@@ -112,10 +112,7 @@ function installChaincodeInOrgPeers(org, chaincode_path, chaincode_version) {
             throw new Error('Failed to enroll user \'admin\'. ' + err);
         }).then((results) => {
             const proposalResponses = results[0];
-            console.log(11, proposalResponses)
             const proposal = results[1];
-            console.log(22, proposal)
-
             // Ensure that all responses (one from each peer) indicate success
             let all_good = true;
             const errors = [];

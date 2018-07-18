@@ -15,7 +15,7 @@ services:
       - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/a3fd00164bc9b7ffa57bede74d101ac6c05e4d94b39e44ded4f15ffa1698b18c_sk
     ports:
       - "7054:7054"
-    command: sh -c 'fabric-ca-server start -b admin:adminpassword'
+    command: sh -c 'fabric-ca-server start -b admin:adminpassword --tls.enabled'
     volumes:
       - ../crypto-config/peerOrganizations/uet.vnu.edu.vn/ca/:/etc/hyperledger/fabric-ca-server-config
     container_name: ca.vnu.edu.vn

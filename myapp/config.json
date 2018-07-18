@@ -10,7 +10,7 @@
       "name": "uet",
       "mspid": "UetMSP",
       "ca": {
-        "url": "http://localhost:7054",
+        "url": "https://localhost:7054",
         "name": "ca.vnu.edu.vn"
       },
       "peer1": {
@@ -18,6 +18,24 @@
         "events": "grpcs://localhost:7053",
         "server-hostname": "peer0.uet.vnu.edu.vn",
         "tls_cacerts": "../crypto-config/peerOrganizations/uet.vnu.edu.vn/peers/peer0.uet.vnu.edu.vn/msp/tlscacerts/tlsca.uet.vnu.edu.vn-cert.pem"
+      },
+      "peer2": {
+        "requests": "grpcs://localhost:8051",
+        "events": "grpcs://localhost:8053",
+        "server-hostname": "peer1.uet.vnu.edu.vn",
+        "tls_cacerts": "../crypto-config/peerOrganizations/uet.vnu.edu.vn/peers/peer1.uet.vnu.edu.vn/msp/tlscacerts/tlsca.uet.vnu.edu.vn-cert.pem"
+      },
+      "peer3": {
+        "requests": "grpcs://localhost:8151",
+        "events": "grpcs://localhost:8153",
+        "server-hostname": "peer2.uet.vnu.edu.vn",
+        "tls_cacerts": "../crypto-config/peerOrganizations/uet.vnu.edu.vn/peers/peer2.uet.vnu.edu.vn/msp/tlscacerts/tlsca.uet.vnu.edu.vn-cert.pem"
+      },
+      "peer4": {
+        "requests": "grpcs://localhost:8251",
+        "events": "grpcs://localhost:8253",
+        "server-hostname": "peer3.uet.vnu.edu.vn",
+        "tls_cacerts": "../crypto-config/peerOrganizations/uet.vnu.edu.vn/peers/peer3.uet.vnu.edu.vn/msp/tlscacerts/tlsca.uet.vnu.edu.vn-cert.pem"
       }
     },
     "ulis": {
@@ -28,6 +46,24 @@
         "events": "grpcs://localhost:9053",
         "server-hostname": "peer0.ulis.vnu.edu.vn",
         "tls_cacerts": "../crypto-config/peerOrganizations/ulis.vnu.edu.vn/peers/peer0.ulis.vnu.edu.vn/msp/tlscacerts/tlsca.ulis.vnu.edu.vn-cert.pem"
+      },
+      "peer2": {
+        "requests": "grpcs://localhost:10051",
+        "events": "grpcs://localhost:10053",
+        "server-hostname": "peer1.ulis.vnu.edu.vn",
+        "tls_cacerts": "../crypto-config/peerOrganizations/ulis.vnu.edu.vn/peers/peer1.ulis.vnu.edu.vn/msp/tlscacerts/tlsca.ulis.vnu.edu.vn-cert.pem"
+      },
+      "peer3": {
+        "requests": "grpcs://localhost:10151",
+        "events": "grpcs://localhost:10153",
+        "server-hostname": "peer2.ulis.vnu.edu.vn",
+        "tls_cacerts": "../crypto-config/peerOrganizations/ulis.vnu.edu.vn/peers/peer2.ulis.vnu.edu.vn/msp/tlscacerts/tlsca.ulis.vnu.edu.vn-cert.pem"
+      },
+      "peer4": {
+        "requests": "grpcs://localhost:10251",
+        "events": "grpcs://localhost:10253",
+        "server-hostname": "peer3.ulis.vnu.edu.vn",
+        "tls_cacerts": "../crypto-config/peerOrganizations/ulis.vnu.edu.vn/peers/peer3.ulis.vnu.edu.vn/msp/tlscacerts/tlsca.ulis.vnu.edu.vn-cert.pem"
       }
     },
     "ussh": {
@@ -38,6 +74,24 @@
         "events": "grpcs://localhost:11053",
         "server-hostname": "peer0.ussh.vnu.edu.vn",
         "tls_cacerts": "../crypto-config/peerOrganizations/ussh.vnu.edu.vn/peers/peer0.ussh.vnu.edu.vn/msp/tlscacerts/tlsca.ussh.vnu.edu.vn-cert.pem"
+      },
+      "peer2": {
+        "requests": "grpcs://localhost:12051",
+        "events": "grpcs://localhost:12053",
+        "server-hostname": "peer1.ussh.vnu.edu.vn",
+        "tls_cacerts": "../crypto-config/peerOrganizations/ussh.vnu.edu.vn/peers/peer1.ussh.vnu.edu.vn/msp/tlscacerts/tlsca.ussh.vnu.edu.vn-cert.pem"
+      },
+      "peer3": {
+        "requests": "grpcs://localhost:12151",
+        "events": "grpcs://localhost:12153",
+        "server-hostname": "peer2.ussh.vnu.edu.vn",
+        "tls_cacerts": "../crypto-config/peerOrganizations/ussh.vnu.edu.vn/peers/peer2.ussh.vnu.edu.vn/msp/tlscacerts/tlsca.ussh.vnu.edu.vn-cert.pem"
+      },
+      "peer4": {
+        "requests": "grpcs://localhost:12251",
+        "events": "grpcs://localhost:12253",
+        "server-hostname": "peer3.ussh.vnu.edu.vn",
+        "tls_cacerts": "../crypto-config/peerOrganizations/ussh.vnu.edu.vn/peers/peer3.ussh.vnu.edu.vn/msp/tlscacerts/tlsca.ussh.vnu.edu.vn-cert.pem"
       }
     }
   }

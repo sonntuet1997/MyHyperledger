@@ -43,9 +43,7 @@ export CC_NAME=uet
 peer chaincode install -n uet3 -v 1.0 -l node -p /opt/gopath/src/github.com/chaincode/chaincode_example02/node/
 peer chaincode instantiate -o orderer.vnu.edu.vn:7050 --tls true --cafile $ORDERER_CA -C $CHANNEL_NAME -n uet3 -l node -v 1.0 -c '{"Args":["init","a", "100", "b","200"]}' -P "AND ('UetMSP.peer','UsshMSP.peer','UlisMSP.peer')"
 peer chaincode invoke -o orderer.vnu.edu.vn:7050 --tls true --cafile $ORDERER_CA -C $CHANNEL_NAME -n uet --peerAddresses peer0.uet.vnu.edu.vn:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/uet.vnu.edu.vn/peers/peer0.uet.vnu.edu.vn/tls/ca.crt --peerAddresses peer0.ulis.vnu.edu.vn:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/ulis.vnu.edu.vn/peers/peer0.ulis.vnu.edu.vn/tls/ca.crt --peerAddresses peer0.ussh.vnu.edu.vn:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/ussh.vnu.edu.vn/peers/peer0.ussh.vnu.edu.vn/tls/ca.crt -c '{"Args":["invoke","a","b","10"]}'
-peer chaincode query -C $CHANNEL_NAME -n uet -c '{"Args
-
-":["query","a"]}'
+peer chaincode query -C $CHANNEL_NAME -n uet -c '{"Args":["query","a"]}'
 --peerAddresses peer0.uet.vnu.edu.vn:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/uet.vnu.edu.vn/peers/peer0.uet.vnu.edu.vn/tls/ca.crt
 
 {"height":36,"currentBlockHash":"rXO1dmXVIMPMoHKA7uZYTzAaml03rY2mVtO+HcAHhm0=","previousBlockHash":"70Nad91qeK5lTr7dHnJr9fQ1aoXe2B56OaPhdloMlC0="}
