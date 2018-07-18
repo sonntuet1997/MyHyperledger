@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # remove old certificate=
 export FABRIC_CFG_PATH=$PWD
 ./bin/configtxgen -profile OrdererGenesis -outputBlock ./channel-artifacts/genesis.block

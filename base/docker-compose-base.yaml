@@ -6,6 +6,23 @@
 version: '2'
 
 services:
+  ca.vnu.edu.vn:
+    image: hyperledger/fabric-ca
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca.vnu.edu.vn
+      - FABRIC_CA_SERVER_CA_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.uet.vnu.edu.vn-cert.pem
+      - FABRIC_CA_SERVER_CA_KEYFILE=/etc/hyperledger/fabric-ca-server-config/a3fd00164bc9b7ffa57bede74d101ac6c05e4d94b39e44ded4f15ffa1698b18c_sk
+    ports:
+      - "7054:7054"
+    command: sh -c 'fabric-ca-server start -b admin:adminpassword'
+    volumes:
+      - ../crypto-config/peerOrganizations/uet.vnu.edu.vn/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca.vnu.edu.vn
+    networks:
+      - uet
+
+
   orderer.vnu.edu.vn:
     container_name: orderer.vnu.edu.vn
     image: hyperledger/fabric-orderer:$IMAGE_TAG
@@ -39,7 +56,7 @@ services:
     environment:
       - CORE_PEER_ID=peer0.uet.vnu.edu.vn
       - CORE_PEER_ADDRESS=peer0.uet.vnu.edu.vn:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.uet.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.uet.vnu.edu.vn:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.uet.vnu.edu.vn:7051
       - CORE_PEER_LOCALMSPID=UetMSP
     volumes:
@@ -120,7 +137,7 @@ services:
       - CORE_PEER_ID=peer0.ulis.vnu.edu.vn
       - CORE_PEER_ADDRESS=peer0.ulis.vnu.edu.vn:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.ulis.vnu.edu.vn:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.ulis.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.ulis.vnu.edu.vn:7051
       - CORE_PEER_LOCALMSPID=UlisMSP
     volumes:
         - /var/run/:/host/var/run/
@@ -200,7 +217,7 @@ services:
       - CORE_PEER_ID=peer0.ussh.vnu.edu.vn
       - CORE_PEER_ADDRESS=peer0.ussh.vnu.edu.vn:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.ussh.vnu.edu.vn:7051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.ussh.vnu.edu.vn:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.ussh.vnu.edu.vn:7051
       - CORE_PEER_LOCALMSPID=UsshMSP
     volumes:
         - /var/run/:/host/var/run/

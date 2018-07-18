@@ -7,6 +7,7 @@ version: '2'
 
 volumes:
   orderer.vnu.edu.vn:
+  ca.vnu.edu.vn:
   peer0.uet.vnu.edu.vn:
   peer1.uet.vnu.edu.vn:
   peer2.uet.vnu.edu.vn:
@@ -20,9 +21,16 @@ volumes:
   peer2.ussh.vnu.edu.vn:
   peer3.ussh.vnu.edu.vn:
 networks:
-  byfn:
+  uet:
 
 services:
+  ca.vnu.edu.vn:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: ca.vnu.edu.vn
+    container_name: ca.vnu.edu.vn
+    networks:
+      - uet
 
   orderer.vnu.edu.vn:
     extends:
@@ -30,7 +38,7 @@ services:
       service: orderer.vnu.edu.vn
     container_name: orderer.vnu.edu.vn
     networks:
-      - byfn
+      - uet
 
   peer0.uet.vnu.edu.vn:
     container_name: peer0.uet.vnu.edu.vn
@@ -38,7 +46,7 @@ services:
       file:  base/docker-compose-base.yaml
       service: peer0.uet.vnu.edu.vn
     networks:
-      - byfn
+      - uet
 
   peer1.uet.vnu.edu.vn:
     container_name: peer1.uet.vnu.edu.vn
@@ -46,7 +54,7 @@ services:
       file:  base/docker-compose-base.yaml
       service: peer1.uet.vnu.edu.vn
     networks:
-      - byfn
+      - uet
 
   peer2.uet.vnu.edu.vn:
     container_name: peer2.uet.vnu.edu.vn
@@ -54,7 +62,7 @@ services:
       file:  base/docker-compose-base.yaml
       service: peer2.uet.vnu.edu.vn
     networks:
-      - byfn
+      - uet
 
   peer3.uet.vnu.edu.vn:
     container_name: peer3.uet.vnu.edu.vn
@@ -62,7 +70,7 @@ services:
       file:  base/docker-compose-base.yaml
       service: peer3.uet.vnu.edu.vn
     networks:
-      - byfn
+      - uet
 
   peer0.ulis.vnu.edu.vn:
     container_name: peer0.ulis.vnu.edu.vn
@@ -70,7 +78,7 @@ services:
       file:  base/docker-compose-base.yaml
       service: peer0.ulis.vnu.edu.vn
     networks:
-      - byfn
+      - uet
 
   peer1.ulis.vnu.edu.vn:
     container_name: peer1.ulis.vnu.edu.vn
@@ -78,7 +86,7 @@ services:
       file:  base/docker-compose-base.yaml
       service: peer1.ulis.vnu.edu.vn
     networks:
-      - byfn
+      - uet
 
   peer2.ulis.vnu.edu.vn:
     container_name: peer2.ulis.vnu.edu.vn
@@ -86,7 +94,7 @@ services:
       file:  base/docker-compose-base.yaml
       service: peer2.ulis.vnu.edu.vn
     networks:
-      - byfn
+      - uet
 
   peer3.ulis.vnu.edu.vn:
     container_name: peer3.ulis.vnu.edu.vn
@@ -94,7 +102,7 @@ services:
       file:  base/docker-compose-base.yaml
       service: peer3.ulis.vnu.edu.vn
     networks:
-      - byfn
+      - uet
 
   peer0.ussh.vnu.edu.vn:
     container_name: peer0.ussh.vnu.edu.vn
@@ -102,7 +110,7 @@ services:
       file:  base/docker-compose-base.yaml
       service: peer0.ussh.vnu.edu.vn
     networks:
-      - byfn
+      - uet
 
   peer1.ussh.vnu.edu.vn:
     container_name: peer1.ussh.vnu.edu.vn
@@ -110,7 +118,7 @@ services:
       file:  base/docker-compose-base.yaml
       service: peer1.ussh.vnu.edu.vn
     networks:
-      - byfn
+      - uet
 
   peer2.ussh.vnu.edu.vn:
     container_name: peer2.ussh.vnu.edu.vn
@@ -118,7 +126,7 @@ services:
       file:  base/docker-compose-base.yaml
       service: peer2.ussh.vnu.edu.vn
     networks:
-      - byfn
+      - uet
 
   peer3.ussh.vnu.edu.vn:
     container_name: peer3.ussh.vnu.edu.vn
@@ -126,7 +134,7 @@ services:
       file:  base/docker-compose-base.yaml
       service: peer3.ussh.vnu.edu.vn
     networks:
-      - byfn
+      - uet
 
   cli:
     container_name: cli
@@ -169,4 +177,4 @@ services:
       - peer2.ussh.vnu.edu.vn
       - peer3.ussh.vnu.edu.vn
     networks:
-      - byfn
+      - uet
